@@ -101,7 +101,7 @@ describe CouchRest::Model do
     it "should be a new_record" do
       @obj = Basic.new
       @obj.rev.should be_nil
-      @obj.should be_a_new_record
+      @obj.new_record?.should be_true
     end
   end
   
@@ -217,7 +217,7 @@ describe CouchRest::Model do
             "q" => "Carve the ___ of reality at the ___.",
             "a" => ["beast","joints"]
           },{
-            "q" => "Who layed the smack down on Leibniz's Law?",
+            "q" => 'Who layed the smack down on Leibniz\'s Law?',
             "a" => "Willard Van Orman Quine"
           }
         ]
@@ -342,7 +342,7 @@ describe CouchRest::Model do
     end
     
     it "should be a new document" do
-      @art.should be_a_new_document
+      @art.new_document?.should be_true
       @art.title.should be_nil
     end
     

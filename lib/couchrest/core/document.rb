@@ -1,15 +1,23 @@
+
 module CouchRest
-  class Response < Hash
-    def initialize keys = {}
-      keys.each do |k,v|
-        self[k.to_s] = v
+  unless defined? CouchRest::Response
+    # This file gets required in multiple times and DelegateClass causes a
+    # superclass mismatch error when that happens. At least, in 1.8.7.
+    # I think it's a ruby bug.
+    class Response < DelegateClass(Hash)
+      def initialize keys = {}
+        super(keys)
+        keys.each { |k,v| self[k] = v}
       end
-    end
-    def []= key, value
-      super(key.to_s, value)
-    end
-    def [] key
-      super(key.to_s)
+
+      alias :old_hash_get :[]
+      alias :old_hash_set :[]=
+      def [](key)
+        old_hash_get(key.to_s)
+      end
+      def []=(key, value)
+        old_hash_set(key.to_s, value)
+      end
     end
   end
   

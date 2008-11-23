@@ -74,7 +74,10 @@ describe CouchRest::Design do
       @des = @db.get "_design/test"
     end
     it "should be a Design" do
-      @des.should be_an_instance_of CouchRest::Design
+      # be_an_instance_of breaks when using DelegateClass which we use for Response
+      # http://rspec.lighthouseapp.com/projects/5645/tickets/71-14475-tempfile-doesn-t-pass-be_an_instance_of-tempfile-maybe-becouse-it-use-decorator
+      # @des.should be_an_instance_of CouchRest::Design
+      @des.instance_of?(CouchRest::Design).should be_true
     end
     it "should have a modifiable name" do
       @des.name.should == "test"

@@ -15,6 +15,7 @@
 require "rubygems"
 require 'json'
 require 'rest_client'
+require 'delegate'
 # require 'extlib'
 
 $:.unshift File.dirname(__FILE__) unless

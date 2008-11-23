@@ -59,10 +59,14 @@ describe "getting from a database" do
     @resp = @db.save({
       "key" => "value"
     })
+
     @doc = @db.get @resp['id']
   end
   it "should return a document" do
-    @doc.should be_an_instance_of(CouchRest::Document)
+    # be_an_instance_of breaks when using DelegateClass which we use for Response
+    # http://rspec.lighthouseapp.com/projects/5645/tickets/71-14475-tempfile-doesn-t-pass-be_an_instance_of-tempfile-maybe-becouse-it-use-decorator
+    # @doc.should be_an_instance_of(CouchRest::Document)
+    @doc.instance_of?(CouchRest::Document).should be_true
   end
   it "should have a database" do
     @doc.database.should == @db
